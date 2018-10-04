@@ -1,0 +1,66 @@
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin: *
+</IfModule>
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteCond %{HTTP_HOST} ^scpt.gwiddle\.co.uk [NC]
+    RewriteCond %{SERVER_PORT} 80
+    RewriteRule ^(.*)$ https://scpt.gwiddle.co.uk/$1 [R,L]
+
+    DirectoryIndex index.php
+    ErrorDocument 404 https://scpt.gwiddle.co.uk/
+	
+    RewriteRule    ^login$ /login.php [NC,L]
+	RewriteRule    ^register$ /register.php [NC,L]
+	RewriteRule    ^register$ /register.php [NC,L]
+	RewriteRule    ^privacypolicy$ /privacypolicy.php [NC,L]
+    RewriteRule    ^termsandconditions$ /termsandconditions.php [NC,L]
+	RewriteRule    ^dashboard$ /modules/dashboard.php    [NC,L]
+    RewriteRule    ^profile$ /modules/profile.php    [NC,L]
+    RewriteRule    ^calendars$ /modules/calendars.php    [NC,L]
+	RewriteRule    ^availability$ /modules/availability.php    [NC,L]
+	RewriteRule    ^reservations$ /modules/reservations.php    [NC,L]
+    RewriteRule    ^reports$ /modules/reports.php    [NC,L]
+	RewriteRule    ^documents$ /modules/documents.php    [NC,L]
+	RewriteRule    ^settings$ /modules/settings.php    [NC,L]
+
+</IfModule>  
+
+#Fix Rewrite
+Options -Multiviews
+ 
+# Mod Rewrite
+Options +FollowSymLinks
+RewriteEngine On
+RewriteBase /php-login-script-level-1/
+ 
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+ 
+# used for php pages such as "https://scpt.gwiddle.co.uk/login.php" will become "https://scpt/gwiddle.co.uk/login/"
+RewriteRule ^([a-z_]+)\/?$ $1.php [NC]
+
+## EXPIRES CACHING ##
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresByType image/jpg "access 1 year"
+ExpiresByType image/jpeg "access 1 year"
+ExpiresByType image/gif "access 1 year"
+ExpiresByType image/png "access 1 year"
+ExpiresByType text/css "access 1 month"
+ExpiresByType text/html "access 1 month"
+ExpiresByType application/pdf "access 1 month"
+ExpiresByType text/x-javascript "access 1 month"
+ExpiresByType application/x-shockwave-flash "access 1 month"
+ExpiresByType image/x-icon "access 1 year"
+ExpiresDefault "access 1 month"
+</IfModule>
+## EXPIRES CACHING ##
+
+# 1 Month for most static assets
+<filesMatch ".(css|jpg|jpeg|png|gif|js|ico)$">
+Header set Cache-Control "max-age=2592000, public"
+</filesMatch>
+
+
+
